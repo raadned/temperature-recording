@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+service TemperatureRecording {
+  rpc TemperatureMeasurementStats (TemperatureMeasurement) returns (TemperatureEntry) {}
+}
+
+message TemperatureMeasurement {
+  int32 temperatureRecording = 1;
+}
+
+message TemperatureEntry {
+  int32 recording = 1;
+  bool persisted = 2;
+}
