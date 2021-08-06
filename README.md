@@ -1,2 +1,2 @@
 # temperature-recording
-REST API based on Flask
+Python gRPC implementation for capturing temperature related data
