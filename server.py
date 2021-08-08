@@ -11,6 +11,7 @@ class TemperatureServicer(temperature_pb2_grpc.TemperatureRecordingServicer):
     """Provides methods that implement functionality of route guide server."""
 
     def TemperatureMeasurementStats(self, recording, context):
+        print('Received %s' % recording)
         return temperature_pb2.TemperatureEntry(recording=recording.temperatureRecording, persisted=True)
 
 
