@@ -6,7 +6,8 @@ import temperature_pb2 as temperature__pb2
 
 
 class TemperatureRecordingStub(object):
-    """Missing associated documentation comment in .proto file."""
+    """Temperature Recording Service
+    """
 
     def __init__(self, channel):
         """Constructor.
@@ -22,10 +23,12 @@ class TemperatureRecordingStub(object):
 
 
 class TemperatureRecordingServicer(object):
-    """Missing associated documentation comment in .proto file."""
+    """Temperature Recording Service
+    """
 
     def TemperatureMeasurementStats(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """create a temperature entry for a temperature measurement
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -46,7 +49,8 @@ def add_TemperatureRecordingServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class TemperatureRecording(object):
-    """Missing associated documentation comment in .proto file."""
+    """Temperature Recording Service
+    """
 
     @staticmethod
     def TemperatureMeasurementStats(request,
