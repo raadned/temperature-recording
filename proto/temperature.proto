@@ -1,14 +1,20 @@
 syntax = "proto3";
 
+// Temperature Recording Service
 service TemperatureRecording {
+  // create a temperature entry for a temperature measurement
   rpc TemperatureMeasurementStats (TemperatureMeasurement) returns (TemperatureEntry) {}
 }
-
+// Temperature Measurement
 message TemperatureMeasurement {
+  // temperature recorded
   int32 temperatureRecording = 1;
 }
 
+// Temperature Entry
 message TemperatureEntry {
+  // temperature recording
   int32 recording = 1;
+  // was it persisted
   bool persisted = 2;
 }
