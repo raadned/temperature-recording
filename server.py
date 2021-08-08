@@ -1,10 +1,10 @@
 from concurrent import futures
 import logging
-
 import grpc
+import sys
+sys.path.insert(0, './proto')
+from proto import temperature_pb2_grpc, temperature_pb2
 
-import temperature_pb2
-import temperature_pb2_grpc
 
 
 class TemperatureServicer(temperature_pb2_grpc.TemperatureRecordingServicer):

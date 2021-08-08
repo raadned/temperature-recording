@@ -1,8 +1,9 @@
 import logging
 
 import grpc
-import temperature_pb2
-import temperature_pb2_grpc
+import sys
+sys.path.insert(0, './proto')
+from proto import temperature_pb2_grpc, temperature_pb2
 
 
 def send_temperature_entry(stub, temperatureMeasurement):
