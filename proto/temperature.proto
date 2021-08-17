@@ -3,7 +3,9 @@ syntax = "proto3";
 // Temperature Recording Service
 service TemperatureRecording {
   // create a temperature entry for a temperature measurement
-  rpc TemperatureMeasurementStats (TemperatureMeasurement) returns (TemperatureEntry) {}
+  rpc TemperatureMeasurementRecord(TemperatureMeasurement) returns (TemperatureEntry) {}
+  // obtain temperature statistics given multiple entries
+  rpc TemperatureMeasurementAvg(stream TemperatureMeasurement) returns (TemperatureMeasurementStats) {}
 }
 // Temperature Measurement
 message TemperatureMeasurement {
@@ -17,4 +19,16 @@ message TemperatureEntry {
   int32 recording = 1;
   // was it persisted
   bool persisted = 2;
+}
+
+// Temperature Entry
+message TemperatureMeasurementStats {
+  // temperature entries
+  int32 numEntries = 1;
+  // min value
+  int32 minTmp = 2;
+  // max value
+  int32 maxTmp = 3;
+  // max value
+  int32 avgTmp = 4;
 }
