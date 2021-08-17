@@ -10,13 +10,13 @@ service TemperatureRecording {
 // Temperature Measurement
 message TemperatureMeasurement {
   // temperature recorded
-  int32 temperatureRecording = 1;
+  double temperatureRecording = 1;
 }
 
 // Temperature Entry
 message TemperatureEntry {
   // temperature recording
-  int32 recording = 1;
+  double recording = 1;
   // was it persisted
   bool persisted = 2;
 }
@@ -26,9 +26,9 @@ message TemperatureMeasurementStats {
   // temperature entries
   int32 numEntries = 1;
   // min value
-  int32 minTmp = 2;
+  double minTmp = 2;
   // max value
-  int32 maxTmp = 3;
+  double maxTmp = 3;
   // max value
-  int32 avgTmp = 4;
+  double avgTmp = 4;
 }
