@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x11temperature.proto\"6\n\x16TemperatureMeasurement\x12\x1c\n\x14temperatureRecording\x18\x01 \x01(\x05\"8\n\x10TemperatureEntry\x12\x11\n\trecording\x18\x01 \x01(\x05\x12\x11\n\tpersisted\x18\x02 \x01(\x08\x32\x63\n\x14TemperatureRecording\x12K\n\x1bTemperatureMeasurementStats\x12\x17.TemperatureMeasurement\x1a\x11.TemperatureEntry\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x11temperature.proto\"6\n\x16TemperatureMeasurement\x12\x1c\n\x14temperatureRecording\x18\x01 \x01(\x01\"8\n\x10TemperatureEntry\x12\x11\n\trecording\x18\x01 \x01(\x01\x12\x11\n\tpersisted\x18\x02 \x01(\x08\"a\n\x1bTemperatureMeasurementStats\x12\x12\n\nnumEntries\x18\x01 \x01(\x05\x12\x0e\n\x06minTmp\x18\x02 \x01(\x01\x12\x0e\n\x06maxTmp\x18\x03 \x01(\x01\x12\x0e\n\x06\x61vgTmp\x18\x04 \x01(\x01\x32\xbc\x01\n\x14TemperatureRecording\x12L\n\x1cTemperatureMeasurementRecord\x12\x17.TemperatureMeasurement\x1a\x11.TemperatureEntry\"\x00\x12V\n\x19TemperatureMeasurementAvg\x12\x17.TemperatureMeasurement\x1a\x1c.TemperatureMeasurementStats\"\x00(\x01\x62\x06proto3'
 )
 
 
@@ -35,8 +35,8 @@ _TEMPERATUREMEASUREMENT = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='temperatureRecording', full_name='TemperatureMeasurement.temperatureRecording', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -67,8 +67,8 @@ _TEMPERATUREENTRY = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='recording', full_name='TemperatureEntry.recording', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
+      number=1, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -95,8 +95,62 @@ _TEMPERATUREENTRY = _descriptor.Descriptor(
   serialized_end=133,
 )
 
+
+_TEMPERATUREMEASUREMENTSTATS = _descriptor.Descriptor(
+  name='TemperatureMeasurementStats',
+  full_name='TemperatureMeasurementStats',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='numEntries', full_name='TemperatureMeasurementStats.numEntries', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='minTmp', full_name='TemperatureMeasurementStats.minTmp', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='maxTmp', full_name='TemperatureMeasurementStats.maxTmp', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='avgTmp', full_name='TemperatureMeasurementStats.avgTmp', index=3,
+      number=4, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=135,
+  serialized_end=232,
+)
+
 DESCRIPTOR.message_types_by_name['TemperatureMeasurement'] = _TEMPERATUREMEASUREMENT
 DESCRIPTOR.message_types_by_name['TemperatureEntry'] = _TEMPERATUREENTRY
+DESCRIPTOR.message_types_by_name['TemperatureMeasurementStats'] = _TEMPERATUREMEASUREMENTSTATS
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 TemperatureMeasurement = _reflection.GeneratedProtocolMessageType('TemperatureMeasurement', (_message.Message,), {
@@ -113,6 +167,13 @@ TemperatureEntry = _reflection.GeneratedProtocolMessageType('TemperatureEntry', 
   })
 _sym_db.RegisterMessage(TemperatureEntry)
 
+TemperatureMeasurementStats = _reflection.GeneratedProtocolMessageType('TemperatureMeasurementStats', (_message.Message,), {
+  'DESCRIPTOR' : _TEMPERATUREMEASUREMENTSTATS,
+  '__module__' : 'temperature_pb2'
+  # @@protoc_insertion_point(class_scope:TemperatureMeasurementStats)
+  })
+_sym_db.RegisterMessage(TemperatureMeasurementStats)
+
 
 
 _TEMPERATURERECORDING = _descriptor.ServiceDescriptor(
@@ -122,16 +183,26 @@ _TEMPERATURERECORDING = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=135,
-  serialized_end=234,
+  serialized_start=235,
+  serialized_end=423,
   methods=[
   _descriptor.MethodDescriptor(
-    name='TemperatureMeasurementStats',
-    full_name='TemperatureRecording.TemperatureMeasurementStats',
+    name='TemperatureMeasurementRecord',
+    full_name='TemperatureRecording.TemperatureMeasurementRecord',
     index=0,
     containing_service=None,
     input_type=_TEMPERATUREMEASUREMENT,
     output_type=_TEMPERATUREENTRY,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='TemperatureMeasurementAvg',
+    full_name='TemperatureRecording.TemperatureMeasurementAvg',
+    index=1,
+    containing_service=None,
+    input_type=_TEMPERATUREMEASUREMENT,
+    output_type=_TEMPERATUREMEASUREMENTSTATS,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

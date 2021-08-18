@@ -9,9 +9,25 @@ from proto import temperature_pb2_grpc, temperature_pb2
 
 class TemperatureServicer(temperature_pb2_grpc.TemperatureRecordingServicer):
 
-    def TemperatureMeasurementStats(self, recording, context):
+    def TemperatureMeasurementRecord(self, recording, context):
         print('Received %s' % recording)
         return temperature_pb2.TemperatureEntry(recording=recording.temperatureRecording, persisted=True)
+
+    def TemperatureMeasurementAvg(self, recordings_iterator, context):
+
+        min = float('inf')
+        max = float('-inf')
+        count = 0
+        sum = 0
+
+        for recording in recordings_iterator:
+            count += 1
+            sum += count
+            max = recording.temperatureRecording if recording.temperatureRecording > max else max
+            min = recording.temperatureRecording if recording.temperatureRecording < min else min
+
+        return temperature_pb2.TemperatureMeasurementStats(numEntries=count, minTmp=min, maxTmp=max, avgTmp=(sum / max))
+
 
 
 def serve():

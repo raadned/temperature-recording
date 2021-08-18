@@ -15,10 +15,15 @@ class TemperatureRecordingStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.TemperatureMeasurementStats = channel.unary_unary(
-                '/TemperatureRecording/TemperatureMeasurementStats',
+        self.TemperatureMeasurementRecord = channel.unary_unary(
+                '/TemperatureRecording/TemperatureMeasurementRecord',
                 request_serializer=temperature__pb2.TemperatureMeasurement.SerializeToString,
                 response_deserializer=temperature__pb2.TemperatureEntry.FromString,
+                )
+        self.TemperatureMeasurementAvg = channel.stream_unary(
+                '/TemperatureRecording/TemperatureMeasurementAvg',
+                request_serializer=temperature__pb2.TemperatureMeasurement.SerializeToString,
+                response_deserializer=temperature__pb2.TemperatureMeasurementStats.FromString,
                 )
 
 
@@ -26,8 +31,15 @@ class TemperatureRecordingServicer(object):
     """Temperature Recording Service
     """
 
-    def TemperatureMeasurementStats(self, request, context):
+    def TemperatureMeasurementRecord(self, request, context):
         """create a temperature entry for a temperature measurement
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def TemperatureMeasurementAvg(self, request_iterator, context):
+        """obtain temperature statistics given multiple entries
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -36,10 +48,15 @@ class TemperatureRecordingServicer(object):
 
 def add_TemperatureRecordingServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'TemperatureMeasurementStats': grpc.unary_unary_rpc_method_handler(
-                    servicer.TemperatureMeasurementStats,
+            'TemperatureMeasurementRecord': grpc.unary_unary_rpc_method_handler(
+                    servicer.TemperatureMeasurementRecord,
                     request_deserializer=temperature__pb2.TemperatureMeasurement.FromString,
                     response_serializer=temperature__pb2.TemperatureEntry.SerializeToString,
+            ),
+            'TemperatureMeasurementAvg': grpc.stream_unary_rpc_method_handler(
+                    servicer.TemperatureMeasurementAvg,
+                    request_deserializer=temperature__pb2.TemperatureMeasurement.FromString,
+                    response_serializer=temperature__pb2.TemperatureMeasurementStats.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -53,7 +70,7 @@ class TemperatureRecording(object):
     """
 
     @staticmethod
-    def TemperatureMeasurementStats(request,
+    def TemperatureMeasurementRecord(request,
             target,
             options=(),
             channel_credentials=None,
@@ -63,8 +80,25 @@ class TemperatureRecording(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/TemperatureRecording/TemperatureMeasurementStats',
+        return grpc.experimental.unary_unary(request, target, '/TemperatureRecording/TemperatureMeasurementRecord',
             temperature__pb2.TemperatureMeasurement.SerializeToString,
             temperature__pb2.TemperatureEntry.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def TemperatureMeasurementAvg(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_unary(request_iterator, target, '/TemperatureRecording/TemperatureMeasurementAvg',
+            temperature__pb2.TemperatureMeasurement.SerializeToString,
+            temperature__pb2.TemperatureMeasurementStats.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
