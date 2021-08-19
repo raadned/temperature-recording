@@ -1,7 +1,9 @@
 from concurrent import futures
+
 import logging
 import grpc
 import sys
+import json
 
 sys.path.insert(0, './proto')
 from proto import temperature_pb2_grpc, temperature_pb2
@@ -11,6 +13,7 @@ class TemperatureServicer(temperature_pb2_grpc.TemperatureRecordingServicer):
 
     def TemperatureMeasurementRecord(self, recording, context):
         print('Received %s' % recording)
+        save_entry(recording)
         return temperature_pb2.TemperatureEntry(recording=recording.temperatureRecording, persisted=True)
 
     def TemperatureMeasurementAvg(self, recordings_iterator, context):
@@ -22,13 +25,16 @@ class TemperatureServicer(temperature_pb2_grpc.TemperatureRecordingServicer):
 
         for recording in recordings_iterator:
             count += 1
-            sum += count
             max = recording.temperatureRecording if recording.temperatureRecording > max else max
             min = recording.temperatureRecording if recording.temperatureRecording < min else min
 
         return temperature_pb2.TemperatureMeasurementStats(numEntries=count, minTmp=min, maxTmp=max, avgTmp=(sum / max))
 
 
+def save_entry(recording):
+    json_value = json.dumps({'recording' : recording.temperatureRecording})
+    hs = open('./db/database.db', 'a+')
+    hs.write(json_value +'\n')
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
